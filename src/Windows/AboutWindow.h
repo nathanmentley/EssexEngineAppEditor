@@ -33,6 +33,6 @@ namespace Windows{
         void ButtonClick();
         void WindowClose();
     private:
-        EssexEngine::WeakPointer<EssexEngine::Daemons::Window::IWindow> tempWindow;
+        EssexEngine::UniquePointer<EssexEngine::Daemons::Window::IWindow> tempWindow;
     };
 }}}};
