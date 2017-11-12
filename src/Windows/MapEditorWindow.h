@@ -37,7 +37,7 @@ namespace Windows{
     private:
         WeakPointer<Daemons::Json::IJsonDocument> mapDocument;
         Libs::IsoMap::Map* map;
-        SharedPointer<Daemons::Gfx::Entity> selectedTileOverlay;
+        UniquePointer<Daemons::Gfx::Entity> selectedTileOverlay;
         int activeTab;
     };
 }}}};

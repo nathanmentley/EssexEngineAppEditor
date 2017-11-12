@@ -12,19 +12,24 @@
 #include <EssexEngineAppEditor/MapEditorWindow.h>
 
 EssexEngine::Apps::Editor::Windows::MapEditorWindow::MapEditorWindow(WeakPointer<Context> _context, WeakPointer<Daemons::Json::IJsonDocument> _gameDocument, WeakPointer<Daemons::Json::IJsonDocument> _mapDocument, std::function<void()> _close)
-:IEditorWindow(_context, _gameDocument, _close) {
+:IEditorWindow(_context, _gameDocument, _close), 
+    selectedTileOverlay(
+        _context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetEntity(
+            _context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetSprite(
+                _context->GetDaemon<Daemons::FileSystem::FileSystemDaemon>()->ReadFile(
+                    "content/root/Tilesets/grassland_tiles.png"
+                ),
+                364,
+                345,
+                Libs::IsoMap::MapTile::TILE_WIDTH,
+                Libs::IsoMap::MapTile::TILE_HEIGHT
+            )
+        )
+    )
+{
     mapDocument = _mapDocument;
     
     map = new Libs::IsoMap::Map(context, _gameDocument, mapDocument);
-    selectedTileOverlay = context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetEntity(
-        context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetSprite(
-            context->GetDaemon<Daemons::FileSystem::FileSystemDaemon>()->ReadFile("content/root/Tilesets/grassland_tiles.png").GetWeakPointer(),
-            364,
-            345,
-            Libs::IsoMap::MapTile::TILE_WIDTH,
-            Libs::IsoMap::MapTile::TILE_HEIGHT
-        ).GetWeakPointer()
-    );
     activeTab = 0;
 }
 
@@ -33,18 +38,6 @@ EssexEngine::Apps::Editor::Windows::MapEditorWindow::~MapEditorWindow() {
 }
 
 void EssexEngine::Apps::Editor::Windows::MapEditorWindow::Logic() {
-    //update selected tile overlay
-    //selectedTileOverlay->SetPosition();
-    selectedTileOverlay->SetPosition(
-        map->GetScreenX(
-            floor(map->GetScreenX()),
-            floor(map->GetScreenY())
-        ),
-        map->GetScreenY(
-            floor(map->GetScreenX()),
-            floor(map->GetScreenY())
-        )
-    );
     //process input.
     if(context->GetDaemon<Daemons::Input::InputDaemon>()->IsKeyPressed(Daemons::Input::KeyboardButton::Up)) {
         map->SetScreenX(map->GetScreenX() + .1);
@@ -66,7 +59,21 @@ void EssexEngine::Apps::Editor::Windows::MapEditorWindow::Logic() {
 
 void EssexEngine::Apps::Editor::Windows::MapEditorWindow::Render() {
     map->Render();//render map
-    context->GetDaemon<Daemons::Gfx::GfxDaemon>()->RenderEntity(selectedTileOverlay.GetWeakPointer());
+    
+    WeakPointer<Daemons::Gfx::Entity> entity = selectedTileOverlay.ToWeakPointer();
+
+    entity->SetPosition(
+        map->GetScreenX(
+            floor(map->GetScreenX()),
+            floor(map->GetScreenY())
+        ),
+        map->GetScreenY(
+            floor(map->GetScreenX()),
+            floor(map->GetScreenY())
+        )
+    );
+
+    context->GetDaemon<Daemons::Gfx::GfxDaemon>()->RenderEntity(entity);
     
     //render window
     ImGui::Begin("Map Editor");

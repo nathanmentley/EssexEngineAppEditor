@@ -44,13 +44,10 @@ namespace Editor{
             bool PauseUnder();
         protected:
             void RenderMainMenu();
-            void LoadMap();
             void ClearMap();
         private:
-            UniquePointer<Daemons::Json::IJsonDocument> gameDocument;
-            SharedPointer<Daemons::FileSystem::IFileBuffer> gameFile;
-            UniquePointer<Daemons::Json::IJsonDocument> mapDocument;
-            SharedPointer<Daemons::FileSystem::IFileBuffer> mapFile;
+            std::unique_ptr<Daemons::Json::IJsonDocument> gameDocument;
+            std::unique_ptr<Daemons::Json::IJsonDocument> mapDocument;
             std::string currentMapFile;
         
             Windows::AboutWindow* aboutWindow;
