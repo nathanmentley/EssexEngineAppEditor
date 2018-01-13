@@ -46,8 +46,8 @@ namespace Editor{
             void RenderMainMenu();
             void ClearMap();
         private:
-            std::unique_ptr<Daemons::Json::IJsonDocument> gameDocument;
-            std::unique_ptr<Daemons::Json::IJsonDocument> mapDocument;
+            UniquePointer<Daemons::Json::IJsonDocument> gameDocument;
+            UniquePointer<Daemons::Json::IJsonDocument> mapDocument;
             std::string currentMapFile;
         
             Windows::AboutWindow* aboutWindow;
