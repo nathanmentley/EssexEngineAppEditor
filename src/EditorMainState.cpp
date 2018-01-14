@@ -11,18 +11,22 @@
 
 #include <EssexEngineAppEditor/EditorMainState.h>
 
-EssexEngine::Apps::Editor::EditorMainState::EditorMainState(WeakPointer<Context> _context)
-: Core::Models::State(_context) {
-        aboutWindow = NULL;
-        editGameDetailsWindow = NULL;
-        editCharactersWindow = NULL;
-        editDoodadsWindow = NULL;
-        editMapTilesWindow = NULL;
-        mapEditorWindow = NULL;
-        mapScriptEditorWindow = NULL;
-        mapSelectorWindow = NULL;
-        packageGameWindow = NULL;
-    }
+EssexEngine::Apps::Editor::EditorMainState::EditorMainState(
+    WeakPointer<Context> _context
+): Core::Models::State(
+    _context
+), aboutWindow(
+    UniquePointer<EssexEngine::Apps::Editor::Windows::AboutWindow>()
+) {
+    editGameDetailsWindow = NULL;
+    editCharactersWindow = NULL;
+    editDoodadsWindow = NULL;
+    editMapTilesWindow = NULL;
+    mapEditorWindow = NULL;
+    mapScriptEditorWindow = NULL;
+    mapSelectorWindow = NULL;
+    packageGameWindow = NULL;
+}
 
 EssexEngine::Apps::Editor::EditorMainState::~EditorMainState() {}
 
@@ -71,7 +75,9 @@ void EssexEngine::Apps::Editor::EditorMainState::RenderMainMenu() {
         {
             if(ImGui::MenuItem("About")) {
                 if(!aboutWindow) {
-                    aboutWindow = new Windows::AboutWindow(context, gameDocument.ToWeakPointer(), [this] () { delete aboutWindow; aboutWindow = NULL; });
+                    aboutWindow.Replace(
+                        new Windows::AboutWindow(context, gameDocument.ToWeakPointer(), [this] () { aboutWindow.Reset(); })
+                    );
                 }
             } else if(ImGui::MenuItem("Exit")) {
                 this->completed = true;

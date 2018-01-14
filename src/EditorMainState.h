@@ -50,7 +50,7 @@ namespace Editor{
             UniquePointer<Daemons::Json::IJsonDocument> mapDocument;
             std::string currentMapFile;
         
-            Windows::AboutWindow* aboutWindow;
+            UniquePointer<Windows::AboutWindow> aboutWindow;
             Windows::EditGameDetailsWindow* editGameDetailsWindow;
             Windows::EditCharactersWindow* editCharactersWindow;
             Windows::EditDoodadsWindow* editDoodadsWindow;
