@@ -14,25 +14,31 @@
 
 #include <EssexEngineCore/EssexEnvironment.h>
 
-#include <EssexEngineAppEditor/IEditorWindow.h>
+#include <EssexEngineWindowDaemon/Window.h>
+#include <EssexEngineWindowDaemon/WindowDaemon.h>
+#include <EssexEngineJsonDaemon/IJsonDocument.h>
+
+#include <EssexEngineAppEditor/Daemons.h>
 
 namespace EssexEngine{
 namespace Apps{
 namespace Editor{
 namespace Windows{
-    class AboutWindow:public IEditorWindow
+    class AboutWindow:public Daemons::Window::Window
     {
     public:
-        AboutWindow(WeakPointer<Context> _context, WeakPointer<Daemons::Json::IJsonDocument> _gameDocument, std::function<void()> _close);
-        ~AboutWindow();
-        
-        //override
-        void Logic();
-        void Render();
+        AboutWindow(
+            WeakPointer<Context> _context,
+            WeakPointer<Daemons::Json::IJsonDocument> _gameDocument,
+            std::function<void()> _close
+        );
         
         void ButtonClick();
         void WindowClose();
     private:
-        EssexEngine::UniquePointer<EssexEngine::Daemons::Window::IWindow> tempWindow;
+        UniquePointer<Daemons::Window::LabelDef> label;
+        UniquePointer<Daemons::Window::ButtonDef> button;
+        
+        WeakPointer<Daemons::Json::IJsonDocument> gameDocument;
     };
 }}}};

@@ -53,35 +53,12 @@ void EssexEngine::Apps::Editor::EditorMainState::Setup() {
 }
 
 void EssexEngine::Apps::Editor::EditorMainState::Logic() {
-    if(aboutWindow) aboutWindow->Logic();
-    
-    if(editGameDetailsWindow) editGameDetailsWindow->Logic();
-    if(editCharactersWindow) editCharactersWindow->Logic();
-    if(editDoodadsWindow) editDoodadsWindow->Logic();
-    if(editMapTilesWindow) editMapTilesWindow->Logic();
-    
     if(mapEditorWindow) mapEditorWindow->Logic();
-    if(mapScriptEditorWindow) mapScriptEditorWindow->Logic();
-    if(mapSelectorWindow) mapSelectorWindow->Logic();
-    
-    if(packageGameWindow) packageGameWindow->Logic();
 }
 
 void EssexEngine::Apps::Editor::EditorMainState::Render() {
-    RenderMainMenu();
-    
-    if(aboutWindow) aboutWindow->Render();
-    
-    if(editGameDetailsWindow) editGameDetailsWindow->Render();
-    if(editCharactersWindow) editCharactersWindow->Render();
-    if(editDoodadsWindow) editDoodadsWindow->Render();
-    if(editMapTilesWindow) editMapTilesWindow->Render();
-    
     if(mapEditorWindow) mapEditorWindow->Render();
-    if(mapScriptEditorWindow) mapScriptEditorWindow->Render();
-    if(mapSelectorWindow) mapSelectorWindow->Render();
-    
-    if(packageGameWindow) packageGameWindow->Render();
+    RenderMainMenu();
 }
 
 bool EssexEngine::Apps::Editor::EditorMainState::PauseUnder() {

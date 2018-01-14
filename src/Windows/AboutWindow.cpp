@@ -11,47 +11,56 @@
  
 #include <EssexEngineAppEditor/AboutWindow.h>
 
-EssexEngine::Apps::Editor::Windows::AboutWindow::AboutWindow(WeakPointer<Context> _context, WeakPointer<Daemons::Json::IJsonDocument> _gameDocument, std::function<void()> _close)
-:IEditorWindow(_context, _gameDocument, _close),
-    tempWindow(
-        _context->GetDaemon<Daemons::Window::WindowDaemon>()->CreateWindow(
-            Daemons::Window::WindowDef(
+EssexEngine::Apps::Editor::Windows::AboutWindow::AboutWindow(
+    WeakPointer<Context> _context, WeakPointer<Daemons::Json::IJsonDocument> _gameDocument,
+    std::function<void()> _close
+):Window(
+    _context,
+    _context->GetDaemon<Daemons::Window::WindowDaemon>()->CreateWindow(
+        WeakPointer<Daemons::Window::WindowDef>(
+            new Daemons::Window::WindowDef(
                 "About Essex Engine Editor - 0.0.1",
                 0,
                 0,
                 400,
                 400,
-                std::bind(&AboutWindow::ButtonClick, this)
+                std::bind(&AboutWindow::WindowClose, this)
             )
         )
+    ),
+    _close
+),label(
+    UniquePointer<Daemons::Window::LabelDef>(
+        new Daemons::Window::LabelDef(
+            "%s Game Editor Build %x",
+            0,
+            0,
+            400,
+            300
+        )
     )
-{
-    Daemons::Window::LabelDef label = Daemons::Window::LabelDef();
-    label.Content = "%s Game Editor Build %x";
-    label.X = 0;
-    label.Y = 0;
-    label.Width = 400;
-    label.Height = 300;
-    context->GetDaemon<Daemons::Window::WindowDaemon>()->AddLabel(tempWindow.ToWeakPointer(), label);
-    
-    Daemons::Window::ButtonDef button = Daemons::Window::ButtonDef();
-    button.Title = "button title";
-    button.X = 10;
-    button.Y = 310;
-    button.Width = 380;
-    button.Height = 80;
-    button.OnClick = std::bind(&AboutWindow::ButtonClick, this);
-    context->GetDaemon<Daemons::Window::WindowDaemon>()->AddButton(tempWindow.ToWeakPointer(), button);
-}
+),button(
+    UniquePointer<Daemons::Window::ButtonDef>(
+        new Daemons::Window::ButtonDef(
+            "button title",
+            100,
+            310,
+            380,
+            80,
+            std::bind(&AboutWindow::ButtonClick, this)
+        )
+    )
+){
+    gameDocument = _gameDocument;
 
-EssexEngine::Apps::Editor::Windows::AboutWindow::~AboutWindow() {
-    context->GetDaemon<Daemons::Window::WindowDaemon>()->CloseWindow(tempWindow.ToWeakPointer());
-}
-
-void EssexEngine::Apps::Editor::Windows::AboutWindow::Logic() {
-}
-
-void EssexEngine::Apps::Editor::Windows::AboutWindow::Render() {
+    context->GetDaemon<Daemons::Window::WindowDaemon>()->AddLabel(
+        window.ToWeakPointer(),
+        label.ToWeakPointer()
+    );
+    context->GetDaemon<Daemons::Window::WindowDaemon>()->AddButton(
+        window.ToWeakPointer(),
+        button.ToWeakPointer()
+    );
 }
 
 void EssexEngine::Apps::Editor::Windows::AboutWindow::WindowClose() {

@@ -30,8 +30,6 @@ namespace Windows{
             gameDocument = _gameDocument;
             close = _close;
         }
-        virtual void Logic() = 0;
-        virtual void Render() = 0;
     protected:
         WeakPointer<Context> context;
         WeakPointer<Daemons::Json::IJsonDocument> gameDocument;
