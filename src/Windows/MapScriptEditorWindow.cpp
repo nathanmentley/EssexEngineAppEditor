@@ -44,6 +44,7 @@ void EssexEngine::Apps::Editor::Windows::MapScriptEditorWindow::Logic() {
 }
 
 void EssexEngine::Apps::Editor::Windows::MapScriptEditorWindow::Render() {
+    /*
     ImGui::Begin("Script Editor");
     
     int i = 0;
@@ -55,20 +56,20 @@ void EssexEngine::Apps::Editor::Windows::MapScriptEditorWindow::Render() {
             //ImGui::InputText(string_format("Name %d", i).c_str(), it2->name, MAX_SCRIPT_NAME_SIZE);
             //ImGui::InputTextMultiline(string_format("Code %d", i).c_str(), it2->code, MAX_SCRIPT_CODE_SIZE);
         }
-        /*
+        
         if(ImGui::Button(string_format("Add New %s", it->first.c_str()).c_str())) {
             scriptdef def = scriptdef();
             def.name = new char[MAX_SCRIPT_NAME_SIZE];
             def.code = new char[MAX_SCRIPT_CODE_SIZE];
             scripts[it->first].push_back(def);
-        }*/
+        }
     }
     
     if(ImGui::Button("Cancel")) {
         close();
     }
     if(ImGui::Button("Save")) {
-        /*if(mapDocument->isObject()) {
+        if(mapDocument->isObject()) {
             (*mapDocument).removeMember("scriptHooks");
             
             (*mapDocument)["scripts"] = Json::Value(Json::arrayValue);
@@ -93,9 +94,10 @@ void EssexEngine::Apps::Editor::Windows::MapScriptEditorWindow::Render() {
                 (void*)(json).c_str(),
                 (json).length()
             );
-        }*/
+        }
         close();
     }
     ImGui::End();
+    */
 }
 

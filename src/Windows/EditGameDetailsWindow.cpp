@@ -40,6 +40,7 @@ void EssexEngine::Apps::Editor::Windows::EditGameDetailsWindow::Logic() {
 }
 
 void EssexEngine::Apps::Editor::Windows::EditGameDetailsWindow::Render() {
+    /*
     ImGui::Begin("Game Info Editor", NULL, ImGuiWindowFlags_ShowBorders );
     ImGui::InputText("GameName", gameName, 256);
     
@@ -58,7 +59,7 @@ void EssexEngine::Apps::Editor::Windows::EditGameDetailsWindow::Render() {
     if(ImGui::Button("Cancel")) {
         close();
     }
-    if(ImGui::Button("Save")) {/*
+    if(ImGui::Button("Save")) {
         if(gameDocument->isObject()) {
             (*gameDocument)["name"] = gameName;
             (*gameDocument)["initialMap"] = maps[selectedMap];
@@ -72,7 +73,8 @@ void EssexEngine::Apps::Editor::Windows::EditGameDetailsWindow::Render() {
                 (json).length()
              );
             close();
-        }*/
+        }
     }
     ImGui::End();
+    */
 }

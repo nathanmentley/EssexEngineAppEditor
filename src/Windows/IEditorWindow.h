@@ -12,7 +12,6 @@
 
 #include <functional>
 
-#include <EssexEngineCore/imgui.h>
 #include <EssexEngineCore/Context.h>
 #include <EssexEngineJsonDaemon/IJsonDocument.h>
 

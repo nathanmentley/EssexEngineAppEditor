@@ -70,13 +70,20 @@ bool EssexEngine::Apps::Editor::EditorMainState::PauseUnder() {
 }
 
 void EssexEngine::Apps::Editor::EditorMainState::RenderMainMenu() {
+    /*
     if(ImGui::BeginMainMenuBar()) {
         if (ImGui::BeginMenu("File"))
         {
             if(ImGui::MenuItem("About")) {
                 if(!aboutWindow) {
                     aboutWindow.Replace(
-                        new Windows::AboutWindow(context, gameDocument.ToWeakPointer(), [this] () { aboutWindow.Reset(); })
+                        new Windows::AboutWindow(
+                            context,
+                            gameDocument.ToWeakPointer(),
+                            [this] () {
+                                aboutWindow.Reset();
+                            }
+                        )
                     );
                 }
             } else if(ImGui::MenuItem("Exit")) {
@@ -108,7 +115,6 @@ void EssexEngine::Apps::Editor::EditorMainState::RenderMainMenu() {
         }
         if (ImGui::BeginMenu("Map"))
         {
-            /*
             if(ImGui::MenuItem("Save Map")) {
                 Json::FastWriter fastWriter;
                 std::string json = fastWriter.write(mapDocument);
@@ -139,7 +145,6 @@ void EssexEngine::Apps::Editor::EditorMainState::RenderMainMenu() {
                     [this] () { delete mapSelectorWindow; mapSelectorWindow = NULL; }
                 );
             }
-            */
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("Export"))
@@ -156,6 +161,7 @@ void EssexEngine::Apps::Editor::EditorMainState::RenderMainMenu() {
         }
         ImGui::EndMainMenuBar();
      }
+    */
 }
 
 void EssexEngine::Apps::Editor::EditorMainState::ClearMap() {

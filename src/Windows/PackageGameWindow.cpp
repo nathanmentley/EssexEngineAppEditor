@@ -23,6 +23,7 @@ void EssexEngine::Apps::Editor::Windows::PackageGameWindow::Logic() {
 }
 
 void EssexEngine::Apps::Editor::Windows::PackageGameWindow::Render() {
+    /*
     ImGui::Begin("Package Game");
     
     ImGui::Text("Packaging wizard is wip.");
@@ -33,4 +34,5 @@ void EssexEngine::Apps::Editor::Windows::PackageGameWindow::Render() {
         close();
     }
     ImGui::End();
+    */
 }

@@ -32,6 +32,7 @@ void EssexEngine::Apps::Editor::Windows::MapSelectorWindow::Logic() {
 }
 
 void EssexEngine::Apps::Editor::Windows::MapSelectorWindow::Render() {
+    /*
     ImGui::Begin("Map Selector");
     
     ImGui::Combo(
@@ -56,4 +57,5 @@ void EssexEngine::Apps::Editor::Windows::MapSelectorWindow::Render() {
         close();
     }
     ImGui::End();
+    */
 }

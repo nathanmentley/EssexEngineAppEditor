@@ -41,8 +41,9 @@ void EssexEngine::Apps::Editor::Windows::EditMapTilesWindow::Logic() {
 }
 
 void EssexEngine::Apps::Editor::Windows::EditMapTilesWindow::Render() {
-    ImGui::Begin("Map Tile Editor", NULL, ImGuiWindowFlags_ShowBorders );
     /*
+    ImGui::Begin("Map Tile Editor", NULL, ImGuiWindowFlags_ShowBorders );
+    
     int i = 0;
     for(auto &tile : tiles) {
         i++;
@@ -103,6 +104,7 @@ void EssexEngine::Apps::Editor::Windows::EditMapTilesWindow::Render() {
             (json).length()
         );
         close();
-    }*/
+    }
     ImGui::End();
+    */
 }

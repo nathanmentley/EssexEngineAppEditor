@@ -45,8 +45,8 @@ void EssexEngine::Apps::Editor::Windows::EditCharactersWindow::Logic() {
 }
 
 void EssexEngine::Apps::Editor::Windows::EditCharactersWindow::Render() {
-    ImGui::Begin("Character Editor", NULL, ImGuiWindowFlags_ShowBorders );
     /*
+    ImGui::Begin("Character Editor", NULL, ImGuiWindowFlags_ShowBorders );
     int i = 0;
     for(auto &character : characters) {
         i++;
@@ -106,6 +106,7 @@ void EssexEngine::Apps::Editor::Windows::EditCharactersWindow::Render() {
             (json).length()
         );
         close();
-    }*/
+    }
     ImGui::End();
+    */
 }

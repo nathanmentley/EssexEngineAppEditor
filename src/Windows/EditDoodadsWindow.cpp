@@ -40,6 +40,7 @@ void EssexEngine::Apps::Editor::Windows::EditDoodadsWindow::Logic() {
 }
 
 void EssexEngine::Apps::Editor::Windows::EditDoodadsWindow::Render() {
+    /*
     ImGui::Begin("Doodad Editor", NULL, ImGuiWindowFlags_ShowBorders );
     
     int i = 0;
@@ -67,7 +68,7 @@ void EssexEngine::Apps::Editor::Windows::EditDoodadsWindow::Render() {
         close();
     }
     if(ImGui::Button("Save")) {
-        /*if(gameDocument->isObject()) {
+        if(gameDocument->isObject()) {
             (*gameDocument).removeMember("doodads");
             
             (*gameDocument)["doodads"] = Json::Value(Json::arrayValue);
@@ -98,7 +99,8 @@ void EssexEngine::Apps::Editor::Windows::EditDoodadsWindow::Render() {
             );
             
             close();
-        }*/
+        }
     }
     ImGui::End();
+    */
 }

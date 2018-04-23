@@ -58,24 +58,27 @@ void EssexEngine::Apps::Editor::Windows::MapEditorWindow::Logic() {
 }
 
 void EssexEngine::Apps::Editor::Windows::MapEditorWindow::Render() {
-    map->Render();//render map
+    map->Render(context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetPrimaryRenderContext());//render map
     
     WeakPointer<Daemons::Gfx::Entity> entity = selectedTileOverlay.ToWeakPointer();
 
     entity->SetPosition(
         map->GetScreenX(
+            context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetPrimaryRenderContext(),
             floor(map->GetScreenX()),
             floor(map->GetScreenY())
         ),
         map->GetScreenY(
+            context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetPrimaryRenderContext(),
             floor(map->GetScreenX()),
             floor(map->GetScreenY())
         )
     );
 
-    context->GetDaemon<Daemons::Gfx::GfxDaemon>()->RenderEntity(entity);
+    context->GetDaemon<Daemons::Gfx::GfxDaemon>()->RenderEntity(context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetPrimaryRenderContext(), entity);
     
     //render window
+    /*
     ImGui::Begin("Map Editor");
     
     if(ImGui::RadioButton("MapTiles", &activeTab, 0)) {
@@ -83,7 +86,7 @@ void EssexEngine::Apps::Editor::Windows::MapEditorWindow::Render() {
     } else if(ImGui::RadioButton("Characters", &activeTab, 2)) {
     } else if(ImGui::RadioButton("Players", &activeTab, 3)) {
     }
-    /*
+    
     switch(activeTab) {
         case 0: {
                 const Json::Value tilesInFile = (*gameDocument)["tiles"];
@@ -122,8 +125,9 @@ void EssexEngine::Apps::Editor::Windows::MapEditorWindow::Render() {
             }
             break;
     }
-    */
+    
     ImGui::End();
+    */
 }
 
 

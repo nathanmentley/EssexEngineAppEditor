@@ -32,11 +32,11 @@ EssexEngine::Apps::Editor::Windows::AboutWindow::AboutWindow(
 ),label(
     UniquePointer<Daemons::Window::LabelDef>(
         new Daemons::Window::LabelDef(
-            "%s Game Editor Build %x",
-            0,
-            0,
-            400,
-            300
+            "EssexEngine Game Editor",
+            50,
+            50,
+            100,
+            100
         )
     )
 ),button(
