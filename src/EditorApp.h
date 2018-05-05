@@ -11,6 +11,7 @@
 #pragma once
 
 #include <EssexEngineCore/BaseApp.h>
+#include <EssexEngineAppEditor/EditorMainState.h>
 
 namespace EssexEngine{
 namespace Apps{
@@ -18,9 +19,13 @@ namespace Editor{
     class EditorApp: public Core::BaseApp
     {
         public:
-            EditorApp(Core::Models::IState* _initState): BaseApp(_initState) { }
+            EditorApp(WeakPointer<Context> context): BaseApp(),
+                initState(UniquePointer<EditorMainState>(new EditorMainState(context))) {}
             ~EditorApp() {}
             std::string GetAppName() { return "Editor"; }
             std::string GetAppVersion() { return ESSEX_ENGINE_VERSION; }
+            WeakPointer<Core::Models::IState> GetInitState() { return initState.ToWeakPointer().Cast<Core::Models::IState>(); };
+        private:
+            UniquePointer<EditorMainState> initState;
     };
 }}};

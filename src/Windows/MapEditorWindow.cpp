@@ -16,6 +16,7 @@ EssexEngine::Apps::Editor::Windows::MapEditorWindow::MapEditorWindow(WeakPointer
     selectedTileOverlay(
         _context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetEntity(
             _context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetSprite(
+                _context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetPrimaryRenderContext(),
                 _context->GetDaemon<Daemons::FileSystem::FileSystemDaemon>()->ReadFile(
                     "content/root/Tilesets/grassland_tiles.png"
                 ),
@@ -29,7 +30,7 @@ EssexEngine::Apps::Editor::Windows::MapEditorWindow::MapEditorWindow(WeakPointer
 {
     mapDocument = _mapDocument;
     
-    map = new Libs::IsoMap::Map(context, _gameDocument, mapDocument);
+    map = new Libs::IsoMap::Map(context, _context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetPrimaryRenderContext(), _gameDocument, mapDocument);
     activeTab = 0;
 }
 
@@ -58,18 +59,16 @@ void EssexEngine::Apps::Editor::Windows::MapEditorWindow::Logic() {
 }
 
 void EssexEngine::Apps::Editor::Windows::MapEditorWindow::Render() {
-    map->Render(context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetPrimaryRenderContext());//render map
+    map->Render();
     
     WeakPointer<Daemons::Gfx::Entity> entity = selectedTileOverlay.ToWeakPointer();
 
     entity->SetPosition(
         map->GetScreenX(
-            context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetPrimaryRenderContext(),
             floor(map->GetScreenX()),
             floor(map->GetScreenY())
         ),
         map->GetScreenY(
-            context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetPrimaryRenderContext(),
             floor(map->GetScreenX()),
             floor(map->GetScreenY())
         )
@@ -132,8 +131,8 @@ void EssexEngine::Apps::Editor::Windows::MapEditorWindow::Render() {
 
 
 void EssexEngine::Apps::Editor::Windows::MapEditorWindow::UpdateTile(int id) {
-    int x = map->GetScreenX();
-    int y = map->GetScreenY();
+    //int x = map->GetScreenX();
+    //int y = map->GetScreenY();
     /*
     Json::Value tilesInFile = (*mapDocument)["maptiles"];
     for (int i = 0; i < tilesInFile.size(); i++) {
@@ -149,9 +148,9 @@ void EssexEngine::Apps::Editor::Windows::MapEditorWindow::UpdateTile(int id) {
     RefreshMap();
 }
 void EssexEngine::Apps::Editor::Windows::MapEditorWindow::UpdateDoodads(int id) {
-    int x = map->GetScreenX();
-    int y = map->GetScreenY();
-    bool updated = false;
+    //int x = map->GetScreenX();
+    //int y = map->GetScreenY();
+    //bool updated = false;
     /*
     Json::Value doodadsInFile = (*mapDocument)["doodads"];
     for (int i = 0; i < doodadsInFile.size(); i++) {
@@ -185,9 +184,9 @@ void EssexEngine::Apps::Editor::Windows::MapEditorWindow::UpdateDoodads(int id) 
     RefreshMap();
 }
 void EssexEngine::Apps::Editor::Windows::MapEditorWindow::UpdateCharacter(int id) {
-    int x = map->GetScreenX();
-    int y = map->GetScreenY();
-    bool updated = false;
+    //int x = map->GetScreenX();
+    //int y = map->GetScreenY();
+    //bool updated = false;
     /*
     Json::Value charactersInFile = (*mapDocument)["npcs"];
     
@@ -220,8 +219,8 @@ void EssexEngine::Apps::Editor::Windows::MapEditorWindow::UpdateCharacter(int id
     RefreshMap();
 }
 void EssexEngine::Apps::Editor::Windows::MapEditorWindow::UpdatePlayer(int id) {
-    int x = map->GetScreenX();
-    int y = map->GetScreenY();
+    //int x = map->GetScreenX();
+    //int y = map->GetScreenY();
     /*
     (*mapDocument)["player"]["character"] = id;
     (*mapDocument)["player"]["x"] = x;
@@ -232,11 +231,11 @@ void EssexEngine::Apps::Editor::Windows::MapEditorWindow::UpdatePlayer(int id) {
 
 void EssexEngine::Apps::Editor::Windows::MapEditorWindow::RefreshMap() {
     //TODO: Update calls to this to instead of refreshing map... update the map data so this changes will be more fluid.
-    
     double screenX = map->GetScreenX();
     double screenY = map->GetScreenY();
+
     delete map;
-    map = new Libs::IsoMap::Map(context, gameDocument, mapDocument);
+    map = new Libs::IsoMap::Map(context, context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetPrimaryRenderContext(), gameDocument, mapDocument);
     map->SetScreenX(screenX);
     map->SetScreenY(screenY);
 }

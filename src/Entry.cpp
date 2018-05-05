@@ -1,17 +1,25 @@
-//
-//  Entry.cpp
-//  EssexEngine
-//
+/* 
+ * Essex Engine
+ * 
+ * Copyright (C) 2017 Nathan Mentley - All Rights Reserved
+ * You may use, distribute and modify this code under the
+ * terms of the BSD license.
+ *
+ * You should have received a copy of the BSD license with
+ * this file. If not, please visit: https://github.com/nathanmentley/EssexEngine
+ */
 
+#include <EssexEngineCore/Context.h>
 #include <EssexEngineAppEditor/EditorApp.h>
-#include <EssexEngineAppEditor/EditorMainState.h>
+
+using EssexEngine::Context;
+using EssexEngine::WeakPointer;
+using EssexEngine::Core::BaseApp;
+
+using EssexEngine::Apps::Editor::EditorApp;
 
 extern "C" {
-    void app_init(EssexEngine::Context* context) {
-        context->RegisterApp(
-            new EssexEngine::Apps::Editor::EditorApp(
-                new EssexEngine::Apps::Editor::EditorMainState(context)
-            )
-        );
+    void app_init(WeakPointer<Context> context) {
+        context->RegisterApp(new EditorApp(context));
     }
 }

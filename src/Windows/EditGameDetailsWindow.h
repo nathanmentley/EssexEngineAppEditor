@@ -27,7 +27,7 @@ namespace Windows{
         void Render();
     private:
         char* gameName;
-        int selectedMap;
+        //int selectedMap;
         std::vector<std::string> maps;
     };
 }}}};
