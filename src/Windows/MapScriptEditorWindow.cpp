@@ -13,10 +13,10 @@
 
 EssexEngine::Apps::Editor::Windows::MapScriptEditorWindow::MapScriptEditorWindow(WeakPointer<Context> _context, WeakPointer<Daemons::Json::IJsonDocument> _gameDocument, Daemons::Json::IJsonDocument* _mapDocument, std::string _currentMapFile, std::function<void()> _close)
 :IEditorWindow(_context, _gameDocument, _close) {
-    mapDocument = _mapDocument;
-    currentMapFile = _currentMapFile;
+    //mapDocument = _mapDocument;
+    //currentMapFile = _currentMapFile;
     
-    scripts = std::map<std::string, std::vector<scriptdef>>();
+    //scripts = std::map<std::string, std::vector<scriptdef>>();
     /*
     const Json::Value scriptHooks = (*gameDocument)["scriptHooks"];
     for (int i = 0; i < scriptHooks.size(); i++) {

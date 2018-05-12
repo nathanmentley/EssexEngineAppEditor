@@ -13,8 +13,8 @@
 
 EssexEngine::Apps::Editor::Windows::EditGameDetailsWindow::EditGameDetailsWindow(WeakPointer<Context> _context, WeakPointer<Daemons::Json::IJsonDocument> _gameDocument, std::function<void()> _close)
 :IEditorWindow(_context, _gameDocument, _close) {
-    gameName = new char[256];
-    maps = std::vector<std::string>();
+    //gameName = new char[256];
+    //maps = std::vector<std::string>();
     /*
     _context->json->GetStringFromNode(gameDocument, "name");
     
@@ -33,7 +33,7 @@ EssexEngine::Apps::Editor::Windows::EditGameDetailsWindow::EditGameDetailsWindow
 
 EssexEngine::Apps::Editor::Windows::EditGameDetailsWindow::~EditGameDetailsWindow()
 {
-    delete gameName;
+    //delete gameName;
 }
 
 void EssexEngine::Apps::Editor::Windows::EditGameDetailsWindow::Logic() {

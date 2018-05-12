@@ -13,7 +13,7 @@
 
 EssexEngine::Apps::Editor::Windows::EditMapTilesWindow::EditMapTilesWindow(WeakPointer<Context> _context, WeakPointer<Daemons::Json::IJsonDocument> _gameDocument, std::function<void()> _close)
 :IEditorWindow(_context, _gameDocument, _close) {
-    tiles = std::vector<maptiledef>();
+    //tiles = std::vector<maptiledef>();
     /*
     std::list<std::unique_ptr<Daemons::Json::IJsonNode>> tilesInFile = context->GetDaemon<Daemons::Json::JsonDaemon>()->GetJsonNodeArray(gameDocument, "tiles");
     
@@ -32,9 +32,9 @@ EssexEngine::Apps::Editor::Windows::EditMapTilesWindow::EditMapTilesWindow(WeakP
 }
 
 EssexEngine::Apps::Editor::Windows::EditMapTilesWindow::~EditMapTilesWindow() {
-    for(auto &tile : tiles) {
-        delete[] tile.filename;
-    }
+    //for(auto &tile : tiles) {
+    //    delete[] tile.filename;
+    //}
 }
 
 void EssexEngine::Apps::Editor::Windows::EditMapTilesWindow::Logic() {

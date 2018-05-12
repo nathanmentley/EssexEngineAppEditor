@@ -13,7 +13,7 @@
 
 EssexEngine::Apps::Editor::Windows::EditDoodadsWindow::EditDoodadsWindow(WeakPointer<Context> _context, WeakPointer<Daemons::Json::IJsonDocument> _gameDocument, std::function<void()> _close)
 :IEditorWindow(_context, _gameDocument, _close) {
-    doodads = std::vector<doodaddef>();
+    //doodads = std::vector<doodaddef>();
     /*
     const Json::Value doodadsInFile = (*gameDocument)["doodads"];
     for (int i = 0; i < doodadsInFile.size(); i++) {
@@ -30,10 +30,10 @@ EssexEngine::Apps::Editor::Windows::EditDoodadsWindow::EditDoodadsWindow(WeakPoi
     }*/
 }
 
-EssexEngine::Apps::Editor::Windows::EditDoodadsWindow::~EditDoodadsWindow() {
+EssexEngine::Apps::Editor::Windows::EditDoodadsWindow::~EditDoodadsWindow() {/*
     for(auto &doodad : doodads) {
         delete[] doodad.filename;
-    }
+    }*/
 }
 
 void EssexEngine::Apps::Editor::Windows::EditDoodadsWindow::Logic() {

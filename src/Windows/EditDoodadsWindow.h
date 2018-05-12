@@ -25,7 +25,7 @@ namespace Windows{
         //override
         void Logic();
         void Render();
-    private:
+    private:/*
         struct doodaddef {
             char* filename;
             int spritexposition;
@@ -33,6 +33,6 @@ namespace Windows{
             int spritewidth;
             int spriteheight;
         };
-        std::vector<doodaddef> doodads;
+        std::vector<doodaddef> doodads;*/
     };
 }}}};

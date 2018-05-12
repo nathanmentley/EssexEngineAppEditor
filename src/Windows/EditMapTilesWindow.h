@@ -25,13 +25,13 @@ namespace Windows{
         //override
         void Logic();
         void Render();
-    private:
+    private:/*
         struct maptiledef {
             int x;
             int y;
             char* filename;
             bool blocking;
         };
-        std::vector<maptiledef> tiles;
+        std::vector<maptiledef> tiles;*/
     };
 }}}};

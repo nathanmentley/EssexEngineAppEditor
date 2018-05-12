@@ -40,9 +40,9 @@ namespace Windows{
             
             void RefreshMap();
         private:
-            UniquePointer<Daemons::Gfx::Entity> selectedTileOverlay;
-            UniquePointer<Libs::IsoMap::Map> map;
-            WeakPointer<Daemons::Json::IJsonDocument> mapDocument;
-            int activeTab;
+            //UniquePointer<Daemons::Gfx::Entity> selectedTileOverlay;
+            //UniquePointer<Libs::IsoMap::Map> map;
+            //WeakPointer<Daemons::Json::IJsonDocument> mapDocument;
+            //int activeTab;
     };
 }}}};

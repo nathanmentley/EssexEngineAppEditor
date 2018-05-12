@@ -20,6 +20,6 @@ using EssexEngine::Apps::Editor::EditorApp;
 
 extern "C" {
     void app_init(WeakPointer<Context> context) {
-        context->RegisterApp(new EditorApp(context));
+        //context->RegisterApp(new EditorApp(context));
     }
 }

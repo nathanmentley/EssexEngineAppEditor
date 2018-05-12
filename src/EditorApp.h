@@ -19,8 +19,14 @@ namespace Editor{
     class EditorApp: public Core::BaseApp
     {
         public:
-            EditorApp(WeakPointer<Context> context): BaseApp(),
-                initState(UniquePointer<EditorMainState>(new EditorMainState(context))) {}
+            EditorApp(WeakPointer<Context> context): BaseApp(context),
+                initState(UniquePointer<EditorMainState>(
+                    new EditorMainState(
+                        context,
+                        WeakPointer<Core::IApp>(this)
+                    )
+                )
+            ) {}
             ~EditorApp() {}
             std::string GetAppName() { return "Editor"; }
             std::string GetAppVersion() { return ESSEX_ENGINE_VERSION; }

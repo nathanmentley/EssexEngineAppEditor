@@ -25,12 +25,12 @@ namespace Windows{
         //override
         void Logic();
         void Render();
-    private:
+    private:/*
         struct characterdef {
             char* filenamebody;
             char* filenamehead;
             char* filenameweapon;
         };
-        std::vector<characterdef> characters;
+        std::vector<characterdef> characters;*/
     };
 }}}};

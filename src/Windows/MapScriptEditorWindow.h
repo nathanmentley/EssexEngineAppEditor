@@ -31,12 +31,13 @@ namespace Windows{
         void Logic();
         void Render();
     private:
+        /*
         struct scriptdef {
             char* name;
             char* code;
         };
         Daemons::Json::IJsonDocument* mapDocument;
         std::string currentMapFile;
-        std::map<std::string, std::vector<scriptdef>> scripts;
+        std::map<std::string, std::vector<scriptdef>> scripts;*/
     };
 }}}};

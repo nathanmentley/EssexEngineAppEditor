@@ -26,7 +26,7 @@ using EssexEngine::Libs::IsoMap::MapTile;
 using EssexEngine::Apps::Editor::Windows::MapEditorWindow;
 
 MapEditorWindow::MapEditorWindow(WeakPointer<Context> _context, WeakPointer<IJsonDocument> _gameDocument, WeakPointer<IJsonDocument> _mapDocument, std::function<void()> _close)
-:IEditorWindow(_context, _gameDocument, _close), 
+:IEditorWindow(_context, _gameDocument, _close)/*, 
     selectedTileOverlay(
         _context->GetDaemon<GfxDaemon>()->GetEntity(
             _context->GetDaemon<GfxDaemon>()->GetSprite(
@@ -48,11 +48,12 @@ MapEditorWindow::MapEditorWindow(WeakPointer<Context> _context, WeakPointer<IJso
     mapDocument = _mapDocument;
     
     activeTab = 0;
-}
+}*/{}
 
 MapEditorWindow::~MapEditorWindow() {}
 
 void MapEditorWindow::Logic() {
+    /*
     WeakPointer<IRenderContext> renderContext = context->GetDaemon<GfxDaemon>()->GetPrimaryRenderContext();
 
     //process input.
@@ -72,9 +73,11 @@ void MapEditorWindow::Logic() {
         map->SetScreenX(map->GetScreenX() - .1);
         map->SetScreenY(map->GetScreenY() + .1);
     }
+    */
 }
 
 void MapEditorWindow::Render() {
+    /*
     map->Render();
     
     WeakPointer<Daemons::Gfx::Entity> entity = selectedTileOverlay.ToWeakPointer();
@@ -91,7 +94,7 @@ void MapEditorWindow::Render() {
     );
 
     context->GetDaemon<GfxDaemon>()->RenderEntity(context->GetDaemon<GfxDaemon>()->GetPrimaryRenderContext(), entity);
-    
+    */
     //render window
     /*
     ImGui::Begin("Map Editor");
@@ -247,6 +250,7 @@ void MapEditorWindow::UpdatePlayer(int id) {
 
 void MapEditorWindow::RefreshMap() {
     //TODO: Update calls to this to instead of refreshing map... update the map data so this changes will be more fluid.
+    /*
     double screenX = map->GetScreenX();
     double screenY = map->GetScreenY();
 
@@ -255,4 +259,5 @@ void MapEditorWindow::RefreshMap() {
     );
     map->SetScreenX(screenX);
     map->SetScreenY(screenY);
+    */
 }

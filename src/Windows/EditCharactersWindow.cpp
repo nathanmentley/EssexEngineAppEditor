@@ -13,7 +13,7 @@
 
 EssexEngine::Apps::Editor::Windows::EditCharactersWindow::EditCharactersWindow(WeakPointer<Context> _context, WeakPointer<Daemons::Json::IJsonDocument> _gameDocument, std::function<void()> _close)
 :IEditorWindow(_context, _gameDocument, _close) {
-    characters = std::vector<characterdef>();
+    //characters = std::vector<characterdef>();
     /*
     std::list<std::unique_ptr<Daemons::Json::IJsonNode>> charactersInFile = context->GetDaemon<Daemons::Json::JsonDaemon>()->GetJsonNodeArray(gameDocument, "characters");
     for(auto& characterInFile : charactersInFile) {
@@ -34,11 +34,12 @@ EssexEngine::Apps::Editor::Windows::EditCharactersWindow::EditCharactersWindow(W
 }
 
 EssexEngine::Apps::Editor::Windows::EditCharactersWindow::~EditCharactersWindow() {
+    /*
     for(auto &character : characters) {
         delete[] character.filenamebody;
         delete[] character.filenamehead;
         delete[] character.filenameweapon;
-    }
+    }*/
 }
 
 void EssexEngine::Apps::Editor::Windows::EditCharactersWindow::Logic() {

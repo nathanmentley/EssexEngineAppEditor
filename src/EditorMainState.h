@@ -34,7 +34,7 @@ namespace Editor{
     class EditorMainState:public Core::Models::State
     {
         public:
-            EditorMainState(WeakPointer<Context> _context);
+            EditorMainState(WeakPointer<Context> _context, WeakPointer<Core::IApp> _app);
             ~EditorMainState();
             
             //override

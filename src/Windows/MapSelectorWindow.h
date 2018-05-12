@@ -28,9 +28,9 @@ namespace Windows{
         void Logic();
         void Render();
     protected:
-        std::function<void(std::string)> changeMap;
+        //std::function<void(std::string)> changeMap;
     private:
-        int selectedMap;
-        std::vector<std::string> maps;
+        //int selectedMap;
+        //std::vector<std::string> maps;
     };
 }}}};

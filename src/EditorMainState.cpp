@@ -11,6 +11,7 @@
 
 #include <EssexEngineAppEditor/EditorMainState.h>
 
+using EssexEngine::Core::IApp;
 using EssexEngine::Core::Models::State;
 
 using EssexEngine::Daemons::FileSystem::IFileBuffer;
@@ -31,8 +32,8 @@ using EssexEngine::Apps::Editor::Windows::MapScriptEditorWindow;
 using EssexEngine::Apps::Editor::Windows::MapSelectorWindow;
 using EssexEngine::Apps::Editor::Windows::PackageGameWindow;
 
-EditorMainState::EditorMainState(WeakPointer<Context> _context):
-    State(_context),
+EditorMainState::EditorMainState(WeakPointer<Context> _context, WeakPointer<IApp> _app):
+    State(_context, _app),
     gameDocument(
         _context->GetDaemon<JsonDaemon>()->GetJsonDocument(
             _context->GetDaemon<FileSystemDaemon>()->ReadFile(GAME_FILE_LOCATION).ToWeakPointer()
