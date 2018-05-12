@@ -1,7 +1,7 @@
 /* 
  * Essex Engine
  * 
- * Copyright (C) 2017 Nathan Mentley - All Rights Reserved
+ * Copyright (C) 2018 Nathan Mentley - All Rights Reserved
  * You may use, distribute and modify this code under the
  * terms of the BSD license.
  *
@@ -11,65 +11,104 @@
 
 #include <EssexEngineAppEditor/EditorMainState.h>
 
-EssexEngine::Apps::Editor::EditorMainState::EditorMainState(
-    WeakPointer<Context> _context
-): Core::Models::State(
-    _context
-), aboutWindow(
-    UniquePointer<EssexEngine::Apps::Editor::Windows::AboutWindow>()
-) {
-    editGameDetailsWindow = NULL;
-    editCharactersWindow = NULL;
-    editDoodadsWindow = NULL;
-    editMapTilesWindow = NULL;
-    mapEditorWindow = NULL;
-    mapScriptEditorWindow = NULL;
-    mapSelectorWindow = NULL;
-    packageGameWindow = NULL;
-}
+using EssexEngine::Core::Models::State;
 
-EssexEngine::Apps::Editor::EditorMainState::~EditorMainState() {}
+using EssexEngine::Daemons::FileSystem::IFileBuffer;
+using EssexEngine::Daemons::Json::IJsonDocument;
 
-void EssexEngine::Apps::Editor::EditorMainState::Setup() {
-    CachedPointer<std::string, Daemons::FileSystem::IFileBuffer> gameFile = context->GetDaemon<Daemons::FileSystem::FileSystemDaemon>()->ReadFile(GAME_FILE_LOCATION);
-    
-    context->GetDaemon<Daemons::Json::JsonDaemon>()->GetJsonDocument(
-        gameFile.ToWeakPointer()
-    ).swap(gameDocument);
+using EssexEngine::Daemons::FileSystem::FileSystemDaemon;
+using EssexEngine::Daemons::Json::JsonDaemon;
 
-    currentMapFile = context->GetDaemon<Daemons::Json::JsonDaemon>()->GetStringFromNode(
-        gameDocument.ToWeakPointer(),
-        "initialMap"
+using EssexEngine::Apps::Editor::EditorMainState;
+
+using EssexEngine::Apps::Editor::Windows::AboutWindow;
+using EssexEngine::Apps::Editor::Windows::EditGameDetailsWindow;
+using EssexEngine::Apps::Editor::Windows::EditCharactersWindow;
+using EssexEngine::Apps::Editor::Windows::EditDoodadsWindow;
+using EssexEngine::Apps::Editor::Windows::EditMapTilesWindow;
+using EssexEngine::Apps::Editor::Windows::MapEditorWindow;
+using EssexEngine::Apps::Editor::Windows::MapScriptEditorWindow;
+using EssexEngine::Apps::Editor::Windows::MapSelectorWindow;
+using EssexEngine::Apps::Editor::Windows::PackageGameWindow;
+
+EditorMainState::EditorMainState(WeakPointer<Context> _context):
+    State(_context),
+    gameDocument(
+        _context->GetDaemon<JsonDaemon>()->GetJsonDocument(
+            _context->GetDaemon<FileSystemDaemon>()->ReadFile(GAME_FILE_LOCATION).ToWeakPointer()
+        )
+    ),
+    currentMapFile(
+        _context->GetDaemon<JsonDaemon>()->GetStringFromNode(
+            gameDocument.ToWeakPointer(),
+            "initialMap"
+        )
+    ),
+    mapDocument(
+        _context->GetDaemon<JsonDaemon>()->GetJsonDocument(
+            _context->GetDaemon<FileSystemDaemon>()->ReadFile(currentMapFile).ToWeakPointer()
+        )
+    ),
+    aboutWindow(
+        UniquePointer<AboutWindow>()
+    ),
+    editGameDetailsWindow(
+        UniquePointer<EditGameDetailsWindow>()
+    ),
+    editCharactersWindow(
+        UniquePointer<EditCharactersWindow>()
+    ),
+    editDoodadsWindow(
+        UniquePointer<EditDoodadsWindow>()
+    ),
+    editMapTilesWindow(
+        UniquePointer<EditMapTilesWindow>()
+    ),
+    mapEditorWindow(
+        UniquePointer<MapEditorWindow>()
+    ),
+    mapScriptEditorWindow(
+        UniquePointer<MapScriptEditorWindow>()
+    ),
+    mapSelectorWindow(
+        UniquePointer<MapSelectorWindow>()
+    ),
+    packageGameWindow(
+        UniquePointer<PackageGameWindow>()
+    ){}
+
+EditorMainState::~EditorMainState() {}
+
+void EditorMainState::Setup() {
+    mapEditorWindow.Replace(
+        new Windows::MapEditorWindow(
+            context,
+            gameDocument.ToWeakPointer(),
+            mapDocument.ToWeakPointer(),
+            [this] () { mapEditorWindow.Reset(); }
+        )
     );
-
-    CachedPointer<std::string, Daemons::FileSystem::IFileBuffer> mapFile = context->GetDaemon<Daemons::FileSystem::FileSystemDaemon>()->ReadFile(currentMapFile);
-    
-    context->GetDaemon<Daemons::Json::JsonDaemon>()->GetJsonDocument(
-        mapFile.ToWeakPointer()
-    ).swap(mapDocument);
-    
-    mapEditorWindow = new Windows::MapEditorWindow(
-        context,
-        gameDocument.ToWeakPointer(),
-        mapDocument.ToWeakPointer(),
-        [this] () { delete mapEditorWindow; mapEditorWindow = NULL; }
-    );
 }
 
-void EssexEngine::Apps::Editor::EditorMainState::Logic() {
-    if(mapEditorWindow) mapEditorWindow->Logic();
+void EditorMainState::Logic() {
+    if(mapEditorWindow.HasValue()) {
+        mapEditorWindow->Logic();
+    }
 }
 
-void EssexEngine::Apps::Editor::EditorMainState::Render() {
-    if(mapEditorWindow) mapEditorWindow->Render();
+void EditorMainState::Render() {
+    if(mapEditorWindow.HasValue()) {
+        mapEditorWindow->Render();
+    }
+
     RenderMainMenu();
 }
 
-bool EssexEngine::Apps::Editor::EditorMainState::PauseUnder() {
+bool EditorMainState::PauseUnder() {
     return true;
 }
 
-void EssexEngine::Apps::Editor::EditorMainState::RenderMainMenu() {
+void EditorMainState::RenderMainMenu() {
     /*
     if(ImGui::BeginMainMenuBar()) {
         if (ImGui::BeginMenu("File"))
@@ -162,8 +201,4 @@ void EssexEngine::Apps::Editor::EditorMainState::RenderMainMenu() {
         ImGui::EndMainMenuBar();
      }
     */
-}
-
-void EssexEngine::Apps::Editor::EditorMainState::ClearMap() {
-    delete mapEditorWindow;
 }

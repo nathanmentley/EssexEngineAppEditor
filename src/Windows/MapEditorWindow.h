@@ -1,7 +1,7 @@
 /* 
  * Essex Engine
  * 
- * Copyright (C) 2017 Nathan Mentley - All Rights Reserved
+ * Copyright (C) 2018 Nathan Mentley - All Rights Reserved
  * You may use, distribute and modify this code under the
  * terms of the BSD license.
  *
@@ -20,24 +20,29 @@ namespace Editor{
 namespace Windows{
     class MapEditorWindow:public IEditorWindow
     {
-    public:
-        MapEditorWindow(WeakPointer<Context> _context, WeakPointer<Daemons::Json::IJsonDocument> _gameDocument, WeakPointer<Daemons::Json::IJsonDocument> _mapDocument, std::function<void()> _close);
-        ~MapEditorWindow();
-        
-        //override
-        void Logic();
-        void Render();
-    protected:
-        void UpdateTile(int id);
-        void UpdateDoodads(int id);
-        void UpdateCharacter(int id);
-        void UpdatePlayer(int id);
-        
-        void RefreshMap();
-    private:
-        WeakPointer<Daemons::Json::IJsonDocument> mapDocument;
-        Libs::IsoMap::Map* map;
-        UniquePointer<Daemons::Gfx::Entity> selectedTileOverlay;
-        int activeTab;
+        public:
+            MapEditorWindow(
+                WeakPointer<Context> _context,
+                WeakPointer<Daemons::Json::IJsonDocument> _gameDocument,
+                WeakPointer<Daemons::Json::IJsonDocument> _mapDocument,
+                std::function<void()> _close
+            );
+            ~MapEditorWindow();
+            
+            //override
+            void Logic();
+            void Render();
+        protected:
+            void UpdateTile(int id);
+            void UpdateDoodads(int id);
+            void UpdateCharacter(int id);
+            void UpdatePlayer(int id);
+            
+            void RefreshMap();
+        private:
+            UniquePointer<Daemons::Gfx::Entity> selectedTileOverlay;
+            UniquePointer<Libs::IsoMap::Map> map;
+            WeakPointer<Daemons::Json::IJsonDocument> mapDocument;
+            int activeTab;
     };
 }}}};

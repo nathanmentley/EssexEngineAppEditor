@@ -1,7 +1,7 @@
 /* 
  * Essex Engine
  * 
- * Copyright (C) 2017 Nathan Mentley - All Rights Reserved
+ * Copyright (C) 2018 Nathan Mentley - All Rights Reserved
  * You may use, distribute and modify this code under the
  * terms of the BSD license.
  *
@@ -32,32 +32,31 @@ namespace EssexEngine{
 namespace Apps{
 namespace Editor{
     class EditorMainState:public Core::Models::State
-	{
-		public:
-			EditorMainState(WeakPointer<Context> _context);
-			~EditorMainState();
-			
-			//override
-			void Setup();
-			void Logic();
-			void Render();
+    {
+        public:
+            EditorMainState(WeakPointer<Context> _context);
+            ~EditorMainState();
+            
+            //override
+            void Setup();
+            void Logic();
+            void Render();
             bool PauseUnder();
         protected:
             void RenderMainMenu();
-            void ClearMap();
         private:
             UniquePointer<Daemons::Json::IJsonDocument> gameDocument;
-            UniquePointer<Daemons::Json::IJsonDocument> mapDocument;
             std::string currentMapFile;
+            UniquePointer<Daemons::Json::IJsonDocument> mapDocument;
         
             UniquePointer<Windows::AboutWindow> aboutWindow;
-            Windows::EditGameDetailsWindow* editGameDetailsWindow;
-            Windows::EditCharactersWindow* editCharactersWindow;
-            Windows::EditDoodadsWindow* editDoodadsWindow;
-            Windows::EditMapTilesWindow* editMapTilesWindow;
-            Windows::MapEditorWindow* mapEditorWindow;
-            Windows::MapScriptEditorWindow* mapScriptEditorWindow;
-            Windows::MapSelectorWindow* mapSelectorWindow;
-            Windows::PackageGameWindow* packageGameWindow;
-	};
+            UniquePointer<Windows::EditGameDetailsWindow> editGameDetailsWindow;
+            UniquePointer<Windows::EditCharactersWindow> editCharactersWindow;
+            UniquePointer<Windows::EditDoodadsWindow> editDoodadsWindow;
+            UniquePointer<Windows::EditMapTilesWindow> editMapTilesWindow;
+            UniquePointer<Windows::MapEditorWindow> mapEditorWindow;
+            UniquePointer<Windows::MapScriptEditorWindow> mapScriptEditorWindow;
+            UniquePointer<Windows::MapSelectorWindow> mapSelectorWindow;
+            UniquePointer<Windows::PackageGameWindow> packageGameWindow;
+    };
 }}};

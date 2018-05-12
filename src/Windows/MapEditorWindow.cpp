@@ -1,7 +1,7 @@
 /* 
  * Essex Engine
  * 
- * Copyright (C) 2017 Nathan Mentley - All Rights Reserved
+ * Copyright (C) 2018 Nathan Mentley - All Rights Reserved
  * You may use, distribute and modify this code under the
  * terms of the BSD license.
  *
@@ -11,54 +11,70 @@
 
 #include <EssexEngineAppEditor/MapEditorWindow.h>
 
-EssexEngine::Apps::Editor::Windows::MapEditorWindow::MapEditorWindow(WeakPointer<Context> _context, WeakPointer<Daemons::Json::IJsonDocument> _gameDocument, WeakPointer<Daemons::Json::IJsonDocument> _mapDocument, std::function<void()> _close)
+using EssexEngine::WeakPointer;
+
+using EssexEngine::Daemons::Gfx::GfxDaemon;
+using EssexEngine::Daemons::FileSystem::FileSystemDaemon;
+
+using EssexEngine::Daemons::Window::IRenderContext;
+using EssexEngine::Daemons::Json::IJsonDocument;
+using EssexEngine::Daemons::Input::KeyboardButton::InputKeys;
+
+using EssexEngine::Libs::IsoMap::Map;
+using EssexEngine::Libs::IsoMap::MapTile;
+
+using EssexEngine::Apps::Editor::Windows::MapEditorWindow;
+
+MapEditorWindow::MapEditorWindow(WeakPointer<Context> _context, WeakPointer<IJsonDocument> _gameDocument, WeakPointer<IJsonDocument> _mapDocument, std::function<void()> _close)
 :IEditorWindow(_context, _gameDocument, _close), 
     selectedTileOverlay(
-        _context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetEntity(
-            _context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetSprite(
-                _context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetPrimaryRenderContext(),
-                _context->GetDaemon<Daemons::FileSystem::FileSystemDaemon>()->ReadFile(
+        _context->GetDaemon<GfxDaemon>()->GetEntity(
+            _context->GetDaemon<GfxDaemon>()->GetSprite(
+                _context->GetDaemon<GfxDaemon>()->GetPrimaryRenderContext(),
+                _context->GetDaemon<FileSystemDaemon>()->ReadFile(
                     "content/root/Tilesets/grassland_tiles.png"
                 ),
                 364,
                 345,
-                Libs::IsoMap::MapTile::TILE_WIDTH,
-                Libs::IsoMap::MapTile::TILE_HEIGHT
+                MapTile::TILE_WIDTH,
+                MapTile::TILE_HEIGHT
             )
         )
+    ),
+    map(
+        new Map(_context, _context->GetDaemon<GfxDaemon>()->GetPrimaryRenderContext(), _gameDocument, _mapDocument)
     )
 {
     mapDocument = _mapDocument;
     
-    map = new Libs::IsoMap::Map(context, _context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetPrimaryRenderContext(), _gameDocument, mapDocument);
     activeTab = 0;
 }
 
-EssexEngine::Apps::Editor::Windows::MapEditorWindow::~MapEditorWindow() {
-    delete map;
-}
+MapEditorWindow::~MapEditorWindow() {}
 
-void EssexEngine::Apps::Editor::Windows::MapEditorWindow::Logic() {
+void MapEditorWindow::Logic() {
+    WeakPointer<IRenderContext> renderContext = context->GetDaemon<GfxDaemon>()->GetPrimaryRenderContext();
+
     //process input.
-    if(context->GetDaemon<Daemons::Input::InputDaemon>()->IsKeyPressed(Daemons::Input::KeyboardButton::Up)) {
+    if(context->GetDaemon<Daemons::Input::InputDaemon>()->IsKeyPressed(renderContext, InputKeys::Up)) {
         map->SetScreenX(map->GetScreenX() + .1);
         map->SetScreenY(map->GetScreenY() + .1);
     }
-    if(context->GetDaemon<Daemons::Input::InputDaemon>()->IsKeyPressed(Daemons::Input::KeyboardButton::Down)) {
+    if(context->GetDaemon<Daemons::Input::InputDaemon>()->IsKeyPressed(renderContext, InputKeys::Down)) {
         map->SetScreenX(map->GetScreenX() - .1);
         map->SetScreenY(map->GetScreenY() - .1);
     }
-    if(context->GetDaemon<Daemons::Input::InputDaemon>()->IsKeyPressed(Daemons::Input::KeyboardButton::Left)) {
+    if(context->GetDaemon<Daemons::Input::InputDaemon>()->IsKeyPressed(renderContext, InputKeys::Left)) {
         map->SetScreenX(map->GetScreenX() + .1);
         map->SetScreenY(map->GetScreenY() - .1);
     }
-    if(context->GetDaemon<Daemons::Input::InputDaemon>()->IsKeyPressed(Daemons::Input::KeyboardButton::Right)) {
+    if(context->GetDaemon<Daemons::Input::InputDaemon>()->IsKeyPressed(renderContext, InputKeys::Right)) {
         map->SetScreenX(map->GetScreenX() - .1);
         map->SetScreenY(map->GetScreenY() + .1);
     }
 }
 
-void EssexEngine::Apps::Editor::Windows::MapEditorWindow::Render() {
+void MapEditorWindow::Render() {
     map->Render();
     
     WeakPointer<Daemons::Gfx::Entity> entity = selectedTileOverlay.ToWeakPointer();
@@ -74,7 +90,7 @@ void EssexEngine::Apps::Editor::Windows::MapEditorWindow::Render() {
         )
     );
 
-    context->GetDaemon<Daemons::Gfx::GfxDaemon>()->RenderEntity(context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetPrimaryRenderContext(), entity);
+    context->GetDaemon<GfxDaemon>()->RenderEntity(context->GetDaemon<GfxDaemon>()->GetPrimaryRenderContext(), entity);
     
     //render window
     /*
@@ -130,7 +146,7 @@ void EssexEngine::Apps::Editor::Windows::MapEditorWindow::Render() {
 }
 
 
-void EssexEngine::Apps::Editor::Windows::MapEditorWindow::UpdateTile(int id) {
+void MapEditorWindow::UpdateTile(int id) {
     //int x = map->GetScreenX();
     //int y = map->GetScreenY();
     /*
@@ -147,7 +163,7 @@ void EssexEngine::Apps::Editor::Windows::MapEditorWindow::UpdateTile(int id) {
     */
     RefreshMap();
 }
-void EssexEngine::Apps::Editor::Windows::MapEditorWindow::UpdateDoodads(int id) {
+void MapEditorWindow::UpdateDoodads(int id) {
     //int x = map->GetScreenX();
     //int y = map->GetScreenY();
     //bool updated = false;
@@ -183,7 +199,7 @@ void EssexEngine::Apps::Editor::Windows::MapEditorWindow::UpdateDoodads(int id) 
     */
     RefreshMap();
 }
-void EssexEngine::Apps::Editor::Windows::MapEditorWindow::UpdateCharacter(int id) {
+void MapEditorWindow::UpdateCharacter(int id) {
     //int x = map->GetScreenX();
     //int y = map->GetScreenY();
     //bool updated = false;
@@ -218,7 +234,7 @@ void EssexEngine::Apps::Editor::Windows::MapEditorWindow::UpdateCharacter(int id
     */
     RefreshMap();
 }
-void EssexEngine::Apps::Editor::Windows::MapEditorWindow::UpdatePlayer(int id) {
+void MapEditorWindow::UpdatePlayer(int id) {
     //int x = map->GetScreenX();
     //int y = map->GetScreenY();
     /*
@@ -229,13 +245,14 @@ void EssexEngine::Apps::Editor::Windows::MapEditorWindow::UpdatePlayer(int id) {
     RefreshMap();
 }
 
-void EssexEngine::Apps::Editor::Windows::MapEditorWindow::RefreshMap() {
+void MapEditorWindow::RefreshMap() {
     //TODO: Update calls to this to instead of refreshing map... update the map data so this changes will be more fluid.
     double screenX = map->GetScreenX();
     double screenY = map->GetScreenY();
 
-    delete map;
-    map = new Libs::IsoMap::Map(context, context->GetDaemon<Daemons::Gfx::GfxDaemon>()->GetPrimaryRenderContext(), gameDocument, mapDocument);
+    map.Replace(
+        new Map(context, context->GetDaemon<GfxDaemon>()->GetPrimaryRenderContext(), gameDocument, mapDocument)
+    );
     map->SetScreenX(screenX);
     map->SetScreenY(screenY);
 }
